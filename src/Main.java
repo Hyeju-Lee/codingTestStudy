@@ -1,24 +1,37 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String args[]) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        int k = scanner.nextInt();
-        long[][] dp = new long[n+1][k+1];
-        for (int i = 0; i <= n; i++) {
-            dp[i][1] = 1;
+    public static void main(String args[]) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        String str = st.nextToken();
+        long[] dp = new long[str.length()+1];
+        if (str.charAt(0) == '0') { //0입력하면
+            System.out.println(0);
+            return;
         }
-
-        for (int i = 2; i <= k; i++) {
-            for (int j = 1; j <= n; j++) {
-                for (int m = 0; m <= j; m++) {
-                    dp[j][i] += dp[m][i-1] % 1000000000;
+        else {
+            dp[0] = 1;
+            dp[1] = 1;
+            for (int i = 2; i <= str.length(); i++) {
+                if (str.charAt(i-1) == '0') {
+                    if (str.charAt(i-2) == '1' || str.charAt(i-2) == '2')
+                        dp[i] = dp[i-2] % 1000000;
+                    else
+                        break;
+                }
+                else {
+                    int result = Integer.parseInt(str.substring(i-2,i));
+                    if (result < 27 && result > 9)
+                        dp[i] = (dp[i-1] + dp[i-2]) % 1000000;
+                    else {
+                        dp[i] = dp[i-1] % 1000000;
+                    }
                 }
             }
         }
-
-        System.out.println(dp[n][k]%1000000000);
-
+        System.out.println(dp[str.length()] % 1000000);
     }
 }
