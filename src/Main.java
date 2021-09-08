@@ -1,28 +1,24 @@
-
 import java.util.Scanner;
 
 public class Main {
-    static long[] dp;
     public static void main(String args[]) {
         Scanner scanner = new Scanner(System.in);
-        int t = scanner.nextInt();
-        for (int i = 0; i < t; i++) {
-            int n = scanner.nextInt();
-            dp = new long[n+1];
-            result(n);
-            System.out.println(dp[n]);
+        int n = scanner.nextInt();
+        int k = scanner.nextInt();
+        long[][] dp = new long[n+1][k+1];
+        for (int i = 0; i <= n; i++) {
+            dp[i][1] = 1;
         }
-    }
 
-    public static void result(int n) {
-        for (int i = 1; i < 4 && i <= n; i++) {
-            dp[i] = 1;
+        for (int i = 2; i <= k; i++) {
+            for (int j = 1; j <= n; j++) {
+                for (int m = 0; m <= j; m++) {
+                    dp[j][i] += dp[m][i-1] % 1000000000;
+                }
+            }
         }
-        for (int i = 4; i < 6 && i <= n; i++) {
-            dp[i] = 2;
-        }
-        for (int i = 6; i <= n; i++) {
-            dp[i] = dp[i-1] + dp[i-5];
-        }
+
+        System.out.println(dp[n][k]%1000000000);
+
     }
 }
