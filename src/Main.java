@@ -5,22 +5,18 @@ public class Main {
     public static void main(String args[]) throws Exception {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
-        int[][] arr = new int[n][2];
+        String[][] arr = new String[n][2];
         for (int i = 0; i < n; i++) {
-            arr[i][1] = scanner.nextInt();
-            arr[i][0] = scanner.nextInt();
+            arr[i][0] = scanner.next();
+            arr[i][1] = scanner.next();
         }
 
         Arrays.sort(arr, (e1, e2) -> {
-            if (e1[0] == e2[0]) {
-                return e1[1] - e2[1];
-            }
-            else
-                return e1[0] - e2[0];
+            return Integer.parseInt(e1[0]) - Integer.parseInt(e2[0]);
         });
 
         for (int i = 0; i < n; i++) {
-            System.out.println(arr[i][1] + " " + arr[i][0]);
+            System.out.println(arr[i][0] + " " + arr[i][1]);
         }
     }
 }
