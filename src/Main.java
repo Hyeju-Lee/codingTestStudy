@@ -1,22 +1,27 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 
 public class Main {
-    public static void main(String args[]) throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        String[][] arr = new String[n][2];
+    static int dp[];
+    static int arr[];
+    public static void main(String args[]) throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int n = Integer.parseInt(br.readLine());
+        dp = new int[n];
+        arr = new int[n];
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            arr[i][0] = scanner.next();
-            arr[i][1] = scanner.next();
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-
-        Arrays.sort(arr, (e1, e2) -> {
-            return Integer.parseInt(e1[0]) - Integer.parseInt(e2[0]);
-        });
-
-        for (int i = 0; i < n; i++) {
-            System.out.println(arr[i][0] + " " + arr[i][1]);
+        dp[0] = arr[0];
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.max(dp[i-1]+arr[i], arr[i]);
+            max = Math.max(max, dp[i]);
         }
+        System.out.println(max);
     }
 }
