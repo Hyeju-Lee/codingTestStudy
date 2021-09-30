@@ -1,41 +1,25 @@
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String args[]) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        int[][] arr = new int[n][2];
+    public static void main(String args[]) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        int n = Integer.parseInt(br.readLine());
+        int[] cost = new int[n + 1];
+        int[] dp = new int[n + 1];
+        st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            arr[i][0] = scanner.nextInt();
-            arr[i][1] = scanner.nextInt();
+            cost[i + 1] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(arr, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] e1, int[] e2) {
-                if (e1[0] == e2[0]) {
-                    return e1[1] - e2[1];
-                }
-                else {
-                    return e1[0] - e2[0];
-                }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                dp[i] = Math.max(dp[i], dp[i - j] + cost[j]);
             }
-        });
-
-        /* 람다식 표현현
-       Arrays.sort(arr, (e1, e2) -> {
-            if (e1[0] == e2[0]) {
-                return e1[1] - e2[1];
-            }
-            else {
-                return e1[0] - e2[0];
-            }
-        });*/
-
-        for (int i = 0; i < n; i++) {
-            System.out.println(arr[i][0] + " " + arr[i][1]);
         }
+
+        System.out.println(dp[n]);
     }
 }
